@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+    <head>
+        <title>Christmas is Over if you want it</title>
+    </head>
+    <body id="bg" onload="draw();">
+    <style>
+        #main-title{
+            font-family:"Comic Sans MS", cursive, sans-serif;
+            color:red;
+            font-style:italic;
+        }
+        #start, #stop {
+            font-family:"Comic Sans MS", cursive, sans-serif;
+            font-size:32px;
+            font-style:italic;
+        }
+
+        #tile {
+            width:250px;
+            position:absolute;
+
+            z-index:-1;
+        }
+        
+        #sw {
+            font-family:arial;
+            font-size:8px;
+            font-style:initial;
+            color:black;
+            text-decoration: none!important;
+        }
+
+        .hidden {
+            display:none;  
+        }
+
+        .red {
+            background-color:red;
+        }
+
+        .green {
+            background-color:green;
+        }
+
+        canvas { border: 3px dotted red; z-index:3;}
+    </style>
+      <button id = "start" onClick="festivities();">begin</button>
+      <h3><a id = "stop" href ="javascript:void(0)" onclick="makeItStop();" class = "hidden">Make it stop!!!!!!!1</a></h3>
+      <canvas id="canvas" height="500" width="500"></canvas>
+      <img id="tile" class="hidden" src="walls_19color.jpg"></img>
+      <script>
+        var myTimer; 
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');        let tile = document.getElementById("tile");
+        let start = document.getElementById("start")
+
+        function draw(){
+            var img = tile;
+
+            ctx.drawImage(img, 219, 219, 62, 62)
+            ctx.fillStyle = "rgba(0, 0, 0," + 0.9 + ")";
+            ctx.fillRect(219, 219, 62, 62)
+        }
+
+        function festivities(){
+
+            var img = tile;
+            // start.classList.add("hidden")
+            var alpha = 0.9
+            var x = 219;
+            var y = 219;
+            var h = 62;
+            var w = 63;
+            // tile.classList.remove("hidden");
+            myTimer = setInterval(function(){
+                // var x = Math.floor((Math.random() * 200 ) + 1)
+                // var y = Math.floor((Math.random() * 200 ) + 1)
+                ctx.clearRect(x,y, w, h)
+
+                if(alpha > 0.0 && w % 5 == 0){
+                    alpha = alpha - 0.05;
+                } else if(alpha <= 0.0){ 
+                    alpha = 0.0
+                }
+
+                if(w < 300 ) {
+                    w+=2;
+                    h+=2;
+                    x--;
+                    y--;
+                }
+                ctx.drawImage(img, x, y, w, h)
+                ctx.fillStyle = "rgba(0, 0, 0," + alpha + ")";
+                ctx.fillRect(x,y, w, h)
+            }, 20)
+        }
+
+        function makeItStop(){
+            clearInterval(myTimer);
+            stop.classList.add("hidden")
+            start.classList.remove("hidden")
+            tile.classList.add("hidden");
+            bg.classList.remove("red")
+            bg.classList.remove("green")
+        }
+
+
+      </script>
+    </body>
+</html>
